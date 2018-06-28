@@ -7,11 +7,14 @@ const ENV         = process.env.ENV || "development";
 const express     = require("express");
 const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
+const request = require('request');
 const app         = express();
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
+const yelp = require('yelp-fusion');
+
 
 // Seperated Routes for each Resource
 //const usersRoutes = require("./routes/users");
@@ -39,9 +42,41 @@ app.use(express.static("public"));
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", {restaurant:null, other:null});
 });
 
+app.post('/', function (req, res) {
+  let input = req.body.list;
+  const apiKey = 'zSL9-cuYDgOMp4YRJ9LjlwidFo8hTQ2P6fmXm6fAN3M8E7VVuyQT7mmE4HTlWks7nJ5X9h1mbluRPY9zMC_XI8S46YprxtQspNATurms73EN-OiUZ5UkH5cEnCk0W3Yx';
+  const client = yelp.client(apiKey);
+  const searchRequest = {
+    term: input,
+    location: 'Vancouver, BC'
+  };
+
+  client.search(searchRequest).then(response => {
+    const firstResult = response.jsonBody.businesses[0].categories;
+    console.log(firstResult)
+    const restaurantName = JSON.stringify(firstResult, null, 4);
+    res.render('index', {
+      restaurant: restaurantName,
+      other: null
+    }) 
+  }).catch(error => {
+      res.render('index', {
+        restaurant: null,
+        other: input
+      })
+      return;
+    })
+
+  })
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
+
+
+
+
+
+
