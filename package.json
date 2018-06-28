@@ -25,6 +25,7 @@
     "pg": "^6.0.2",
     "popper.js": "^1.14.3",
     "request": "^2.87.0",
+    "startbootstrap-heroic-features": "^4.0.0",
     "yelp-fusion": "^2.0.3"
   },
   "devDependencies": {
