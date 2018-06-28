@@ -43,7 +43,7 @@ app.use(express.static("public"));
 // Home page
 app.get("/", (req, res) => {
   res.render("index");
-  return database.insertPost('Test', 'Test')
+  //return database.insertPost('Test', 'Test')
   return database.getAllPosts()
 });
 

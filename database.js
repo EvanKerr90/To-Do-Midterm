@@ -14,7 +14,7 @@ module.exports = function knexData(knex) {
     },
 
     insertPost: function (content, category) {
-      knex('posts').insert({content: content, category: category})
+      knex('posts').insert([{content: content, category: category}])
         .asCallback(function (err, result) {
           if (err) {
             return console.log(err)
