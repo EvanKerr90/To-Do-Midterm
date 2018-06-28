@@ -13,6 +13,9 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
+
+const database = require("./database")(knex);
+
 // Seperated Routes for each Resource
 //const usersRoutes = require("./routes/users");
 
@@ -40,6 +43,8 @@ app.use(express.static("public"));
 // Home page
 app.get("/", (req, res) => {
   res.render("index");
+  return database.insertPost('Test', 'Test')
+  return database.getAllPosts()
 });
 
 app.listen(PORT, () => {

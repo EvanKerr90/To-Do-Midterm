@@ -1,55 +1,46 @@
-const settings = require("./settings"); // settings.json
+module.exports = function knexData(knex) {
+  return {
 
-const knex = require('knex')({
-  client: 'pg',
-  connection: {
-    host: settings.hostname,
-    user: settings.user,
-    password: settings.password,
-    database: settings.database
+    getAllPosts: function () {
+      knex('posts')
+        .asCallback(function (err, result) {
+          if (err) {
+            return console.log(err)
+          } else {
+            console.log(result)
+            knex.destroy();
+          }
+        });
+    },
+
+    insertPost: function (content, category) {
+      knex('posts').insert({content: content, category: category})
+        .asCallback(function (err, result) {
+          if (err) {
+            return console.log(err)
+          } else {
+            console.log(result)
+            knex.destroy();
+          }
+        });
+    }
   }
-});
-
-module.exports = function knexData 
-
-function getAllPosts() {
-    knex('posts')
-    .asCallback(function (err, result) {
-        if (err) {
-          return console.log(err)
-        } else {
-          result
-          knex.destroy();
-        }
-    });
-}
-
-function insertUser(email,password) {
-    knex('posts')
-    .asCallback(function (err, result) {
-        if (err) {
-          return console.log(err)
-        } else {
-          result
-          knex.destroy();
-        }
-    });
 }
 
 
 
 
 function verifyUserByEmail(email, password) {
-    knex.select('email', 'password').from('users').where({
-        email: email,
-        password: password
+  knex.select('email', 'password').from('users').where({
+      email: email,
+      password: password
     })
-  .asCallback(function (err, result) {
-    if (err) {
-      return console.log(err)
-    } else {
-      result
-      knex.destroy();
-    }
-  });
+    .asCallback(function (err, result) {
+      if (err) {
+        return console.log(err)
+      } else {
+        result
+        knex.destroy();
+      }
+    });
 }
