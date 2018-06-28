@@ -13,8 +13,11 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
-const yelp = require('yelp-fusion');
+const request     = require('request');
+const yelp        = require('yelp-fusion');
 
+
+const database = require("./database")(knex);
 
 // Seperated Routes for each Resource
 //const usersRoutes = require("./routes/users");
@@ -43,6 +46,8 @@ app.use(express.static("public"));
 // Home page
 app.get("/", (req, res) => {
   res.render("index", {restaurant:null, other:null});
+  //return database.insertPost('Test', 'Test')
+  //return database.getAllPosts()
 });
 
 app.post('/', function (req, res) {
@@ -71,6 +76,7 @@ app.post('/', function (req, res) {
     })
 
   })
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
