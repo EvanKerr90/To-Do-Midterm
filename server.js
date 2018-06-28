@@ -7,7 +7,6 @@ const ENV         = process.env.ENV || "development";
 const express     = require("express");
 const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
-const request = require('request');
 const app         = express();
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
@@ -60,9 +59,11 @@ app.post('/', function (req, res) {
   };
 
   client.search(searchRequest).then(response => {
-    const firstResult = response.jsonBody.businesses[0].categories;
-    console.log(firstResult)
+    const firstResult = response.jsonBody.businesses[0].name;
+    //console.log(firstResult)
     const restaurantName = JSON.stringify(firstResult, null, 4);
+    console.log(restaurantName)
+    //database.insertPost(restaurantName, 'restaurant')
     res.render('index', {
       restaurant: restaurantName,
       other: null
