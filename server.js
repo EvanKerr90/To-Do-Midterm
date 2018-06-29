@@ -2,18 +2,18 @@
 
 require('dotenv').config();
 
-const PORT        = process.env.PORT || 8080;
-const ENV         = process.env.ENV || "development";
-const express     = require("express");
-const bodyParser  = require("body-parser");
-const sass        = require("node-sass-middleware");
-const app         = express();
-const knexConfig  = require("./knexfile");
-const knex        = require("knex")(knexConfig[ENV]);
-const morgan      = require('morgan');
-const knexLogger  = require('knex-logger');
-const request     = require('request');
-const yelp        = require('yelp-fusion');
+const PORT = process.env.PORT || 8080;
+const ENV = process.env.ENV || "development";
+const express = require("express");
+const bodyParser = require("body-parser");
+const sass = require("node-sass-middleware");
+const app = express();
+const knexConfig = require("./knexfile");
+const knex = require("knex")(knexConfig[ENV]);
+const morgan = require('morgan');
+const knexLogger = require('knex-logger');
+const request = require('request');
+const yelp = require('yelp-fusion');
 
 
 const database = require("./database")(knex);
@@ -30,7 +30,9 @@ app.use(morgan('dev'));
 app.use(knexLogger(knex));
 
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -44,46 +46,39 @@ app.use(express.static("public"));
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index", {restaurant:null, other:null});
+  res.render("index", {
+    restaurant: null,
+    other: null
+  });
   //return database.insertPost('Test', 'Test')
   //return database.getAllPosts()
 });
 
-app.post('/', function (req, res) {
+app.post('/', (req, res) => {
+  let resultName;
   let input = req.body.list;
-  const apiKey = 'zSL9-cuYDgOMp4YRJ9LjlwidFo8hTQ2P6fmXm6fAN3M8E7VVuyQT7mmE4HTlWks7nJ5X9h1mbluRPY9zMC_XI8S46YprxtQspNATurms73EN-OiUZ5UkH5cEnCk0W3Yx';
-  const client = yelp.client(apiKey);
-  const searchRequest = {
-    term: input,
-    location: 'Vancouver, BC'
-  };
-
-  client.search(searchRequest).then(response => {
-    const firstResult = response.jsonBody.businesses[0].name;
-    //console.log(firstResult)
-    const restaurantName = JSON.stringify(firstResult, null, 4);
-    console.log(restaurantName)
-    //database.insertPost(restaurantName, 'restaurant')
-    res.render('index', {
-      restaurant: restaurantName,
-      other: null
-    }) 
-  }).catch(error => {
+  request('http://api.walmartlabs.com/v1/search?apiKey=erubnzcy46ck4nsjxnhnndp8&query=ipod', (error, response, body) => {
+      let parsed = JSON.parse(body)
+      resultName = parsed.items[0].name;
+      //console.log(resultName)
+    })
+    //database.insertPost(name, '')
+    .then(function (response) {
+      res.render('index', {
+        restaurant: resultName,
+        other: null
+      })
+    })
+    .catch(error => {
       res.render('index', {
         restaurant: null,
         other: input
       })
       return;
     })
-
   })
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
-
-
-
-
-
-
