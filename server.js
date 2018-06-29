@@ -17,6 +17,11 @@ const yelp = require('yelp-fusion');
 
 
 const database = require("./database")(knex);
+const search = require("./apis")
+
+//const postsRoutes = require("./routes/posts")(database);
+
+//app.use("/posts", postsRoutes);
 
 // Seperated Routes for each Resource
 //const usersRoutes = require("./routes/users");
@@ -55,28 +60,12 @@ app.get("/", (req, res) => {
 });
 
 app.post('/', (req, res) => {
-  let resultName;
-  let input = req.body.list;
-  request('http://api.walmartlabs.com/v1/search?apiKey=erubnzcy46ck4nsjxnhnndp8&query=ipod', (error, response, body) => {
-      let parsed = JSON.parse(body)
-      resultName = parsed.items[0].name;
-      //console.log(resultName)
-    })
-    //database.insertPost(name, '')
-    .then(function (response) {
-      res.render('index', {
-        restaurant: resultName,
-        other: null
-      })
-    })
-    .catch(error => {
-      res.render('index', {
-        restaurant: null,
-        other: input
-      })
-      return;
-    })
-  })
+search.apiSearch(req)
+database.getAllPosts()
+res.render("index")
+})
+
+
 
 
 app.listen(PORT, () => {

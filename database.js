@@ -8,39 +8,32 @@ module.exports = function knexData(knex) {
             return console.log(err)
           } else {
             console.log(result)
-            knex.destroy();
+            //knex.destroy();
           }
         });
     },
 
     insertPost: function (content, category) {
-      knex('posts').insert([{content: content, category: category}])
+      knex('posts').insert([{
+          content: content,
+          category: category
+        }])
         .asCallback(function (err, result) {
           if (err) {
             return console.log(err)
           } else {
             console.log(result)
-            knex.destroy();
+            //knex.destroy();
           }
         });
+    },
+
+    modifyPost: function (id, newCategory) {
+      knex('posts').where('id', id).update('category', newCategory)
+    },
+
+    deletePost: function (id) {
+      knex('posts').where('id', id).delete()
     }
   }
-}
-
-
-
-
-function verifyUserByEmail(email, password) {
-  knex.select('email', 'password').from('users').where({
-      email: email,
-      password: password
-    })
-    .asCallback(function (err, result) {
-      if (err) {
-        return console.log(err)
-      } else {
-        result
-        knex.destroy();
-      }
-    });
 }
