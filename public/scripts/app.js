@@ -2,7 +2,13 @@ $(document).ready(function () {
   loadPosts()
 
   function createPost(post) {
-    var $post = $('<button>').attr('id', post.id).text(post.content).addClass("list-group-item")
+    console.log(post.content)
+    var $image = $('<i>').addClass("fa fa-trash")
+    var $span = $('<span>').addClass('span')
+    var $post = $('<button>').attr('draggable', 'true').attr('ondragstart', 'drag(event)').attr('type', 'button').attr('id', post.id).text(post.content)
+    
+    $span.append($image)
+    $post.append($span)
     console.log($post)
 
     return $post;
@@ -10,13 +16,13 @@ $(document).ready(function () {
 
 
   function renderPosts(posts) {
-    console.log(posts)
+    //console.log(posts)
+    $('div.to eat').empty()
     posts.forEach(function(element)  {
-      console.log(element)
-      $('div.to eat').empty();
+      //console.log(element)
       var $post = createPost(element);
       $('div.to eat').append($post);
-    })
+    });
   }
 
 
@@ -25,7 +31,7 @@ $(document).ready(function () {
       Method: 'GET',
       url: '/posts',
       success: function (data) {
-        console.log(data)
+        //console.log(data)
         renderPosts(data);
       }
     })
