@@ -9,10 +9,10 @@
 
   <title>The only to do list you need!</title>
   <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-  <link href="/styles/layout.scss" rel="stylesheet">
+  <link href="/styles/layout.css" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
     crossorigin="anonymous">
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
@@ -90,7 +90,7 @@
             alt="">
           <div ondrop="drop(event)" ondragover="allowDrop(event)" class="card-body">
             <h4 class="card-title">To Eat</h4>
-            <div class="list-group" class="to eat">
+            <div class="list-group" id="to eat">
               <button draggable="true" ondragstart="drag(event)" type="button" id="p1">
                 <span class="span">
                   <i class="fa fa-trash"></i>

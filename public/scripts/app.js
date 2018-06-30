@@ -17,11 +17,11 @@ $(document).ready(function () {
 
   function renderPosts(posts) {
     //console.log(posts)
-    $('div.to eat').empty()
+    //$('div.to eat').empty()
     posts.forEach(function(element)  {
       //console.log(element)
       var $post = createPost(element);
-      $('div.to eat').append($post);
+      $('div#to eat.list-group').append($post);
     });
   }
 
