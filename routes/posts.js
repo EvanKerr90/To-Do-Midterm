@@ -1,20 +1,19 @@
 "use strict";
 const express = require('express');
 const postsRoutes = express.Router();
+const bodyParser = require("body-parser");
 
 const search = require("../apis")
 
 module.exports = function (database) {
 
   postsRoutes.get("/", function (req, res) {
-    database.getAllPosts((err, result) => {
-      if (err) {
-        console.log(err)
-      } else {
-      console.log(JSON.stringify(result))
-      res.send(result)
-      }
-    })
+    database.getAllPosts()
+    .then(function (result) {
+        console.log(result)
+        res.json(result)
+        //knex.destroy();
+      })
   });
 
   postsRoutes.post("/", function (req, res) {

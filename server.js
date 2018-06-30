@@ -39,8 +39,6 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.use("/posts", postsRoutes);
-
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -48,6 +46,8 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 app.use(express.static("public"));
+
+app.use("/posts", postsRoutes);
 
 // Mount all resource routes
 //app.use("/api/users", usersRoutes(knex));

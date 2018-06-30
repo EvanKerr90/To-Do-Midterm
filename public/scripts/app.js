@@ -3,6 +3,7 @@ $(document).ready(function () {
 
   function createPost(post) {
     var $post = $('<button>').attr('id', post.id).text(post.content).addClass("list-group-item")
+    console.log($post)
 
     return $post;
   }
@@ -11,9 +12,10 @@ $(document).ready(function () {
   function renderPosts(posts) {
     console.log(posts)
     posts.forEach(function(element)  {
-      $('div.to-eat' + element.category).empty();
+      console.log(element)
+      $('div.to eat').empty();
       var $post = createPost(element);
-      $('div.to eat' + element.category).append($post);
+      $('div.to eat').append($post);
     })
   }
 
@@ -21,7 +23,7 @@ $(document).ready(function () {
   function loadPosts() {
     $.ajax({
       Method: 'GET',
-      url: '/posts/',
+      url: '/posts',
       success: function (data) {
         console.log(data)
         renderPosts(data);

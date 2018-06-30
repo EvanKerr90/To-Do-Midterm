@@ -2,16 +2,7 @@ module.exports = function knexData(knex) {
   return {
 
     getAllPosts: function () {
-      knex('posts').where({category: 'to eat'})
-        .asCallback(function (err, result) {
-          if (err) {
-            return console.log(err)
-          } else {
-            console.log(result)
-            return result
-            //knex.destroy();
-          }
-        });
+       return knex('posts').where({category: 'to eat'})
     },
 
     insertPost: function (content, category) {
@@ -23,7 +14,7 @@ module.exports = function knexData(knex) {
           if (err) {
             return console.log(err)
           } else {
-            console.log(result)
+            //console.log(result)
             return
             //knex.destroy();
           }
