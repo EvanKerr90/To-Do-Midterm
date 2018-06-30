@@ -13,7 +13,6 @@ const knexLogger = require('knex-logger');
 const request = require('request');
 const yelp = require('yelp-fusion');
 const parseString = require('xml2js').parseString;
-
 const database = require("./database")(knex);
 
 exports.apiSearch = function (req) {
@@ -30,26 +29,27 @@ exports.apiSearch = function (req) {
 
     const eat = new Promise((resolve, reject) => {
       let input = req.body.list;
+      let inputLower = input.toLowerCase();
       const apiKey = 'zSL9-cuYDgOMp4YRJ9LjlwidFo8hTQ2P6fmXm6fAN3M8E7VVuyQT7mmE4HTlWks7nJ5X9h1mbluRPY9zMC_XI8S46YprxtQspNATurms73EN-OiUZ5UkH5cEnCk0W3Yx';
+
       const client = yelp.client(apiKey);
       const searchRequest = {
         term: input,
         location: 'Vancouver, BC'
       }
+
       client.search(searchRequest).then(response => {
-        const firstResult = response.jsonBody.businesses[0].name;
-        const restaurantName = JSON.stringify(firstResult, null, 4);
-        const restaurantNameLower = restaurantName.toLowerCase();
-        const inputLower = input.toLowerCase();
-        if (restaurantNameLower.includes(inputLower)) {
-          return resolve(apiChoice.food = true);
-        } else {
-          return resolve(apiChoice.food = false);
-        }
+        const firstResult = response.jsonBody.businesses[0];
+        const firstName = firstResult && firstResult.name;
+        const restaurantName = JSON.stringify(firstName, null, 4);
+        // only return true if firstName includes inputName
+        return resolve(apiChoice.food = firstName && restaurantName.toLowerCase().includes(input.toLowerCase()))
+      }).catch(function (error){
+        apiChoice.food = false;
       })
+
     }).catch(function (error) {
       apiChoice.food = false;
-      console.log('error1',error);
     })
 
     const product = new Promise((resolve, reject) => {
@@ -76,7 +76,6 @@ exports.apiSearch = function (req) {
         })
     }).catch(function (error) {
       apiChoice.product = false;
-      console.log(error);
     })
 
     const movie = new Promise((resolve, reject) => {
@@ -99,7 +98,6 @@ exports.apiSearch = function (req) {
       })
     }).catch(function (error) {
       apiChoice.movie = false;
-      console.log(error);
     })
 
     const book = new Promise((resolve, reject) => {
@@ -128,12 +126,9 @@ exports.apiSearch = function (req) {
         })
     }).catch(function (error) {
       apiChoice.book = false;
-      console.log(error);
     })
 
-
     return Promise.all([eat, product, movie, book]).then(function (r) {
-      console.log(apiChoice);
       if (apiChoice.movie === true) {
         return category = "Movie";
       } else if (apiChoice.book === true) {
@@ -149,8 +144,6 @@ exports.apiSearch = function (req) {
     .then(function (category) {
         database.insertPost(req.body.list, category);
         database.getAllPosts();
-      }).catch(function (error) {
-        console.log(error);
-    })
+      })
   }
 }

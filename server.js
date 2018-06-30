@@ -66,7 +66,9 @@ res.render("index")
 })
 
 
-
+app.get("/register", (req, res) => {
+  res.sendFile("/vagrant/To-Do-Midterm/views/register.html")
+  });
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
