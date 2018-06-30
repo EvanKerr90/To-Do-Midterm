@@ -1,7 +1,7 @@
 $(document).ready(function () {
   loadPosts()
 
-  function createPost(post) {
+  function createPostElement(post) {
     console.log(post.content)
     var $image = $('<i>').addClass("fa fa-trash")
     var $span = $('<span>').addClass('span')
@@ -20,7 +20,7 @@ $(document).ready(function () {
     //$('div.to eat').empty()
     posts.forEach(function(element)  {
       //console.log(element)
-      var $post = createPost(element);
+      var $post = createPostElement(element);
       $('div#to eat.list-group').append($post);
     });
   }
