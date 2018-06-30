@@ -7,8 +7,8 @@ module.exports = function knexData(knex) {
           if (err) {
             return console.log(err)
           } else {
-            console.log(JSON.stringify(result))
-            return JSON.stringify(result)
+            console.log(result)
+            return result
             //knex.destroy();
           }
         });
