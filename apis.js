@@ -17,13 +17,14 @@ const parseString = require('xml2js').parseString;
 const database = require("./database")(knex);
 
 exports.apiSearch = function (req) {
-  if (!req.body.list) {
+  let input = req.body.data;
+  //console.log(req.body.data)
+  if (!req.body.data) {
     return
   } else {
   let category = 'other';
 
   const eat = new Promise((resolve, reject) => {
-    let input = req.body.list;
     const apiKey = 'zSL9-cuYDgOMp4YRJ9LjlwidFo8hTQ2P6fmXm6fAN3M8E7VVuyQT7mmE4HTlWks7nJ5X9h1mbluRPY9zMC_XI8S46YprxtQspNATurms73EN-OiUZ5UkH5cEnCk0W3Yx';
     const client = yelp.client(apiKey);
     const searchRequest = {
@@ -39,7 +40,7 @@ exports.apiSearch = function (req) {
       const restaurantNameLower = restaurantName.toLowerCase();
       const inputLower = input.toLowerCase();
       if (restaurantNameLower.includes(inputLower)) {
-        console.log('restaurant exist', restaurantName)
+        //console.log('restaurant exist', restaurantName)
         return resolve(category = 'to eat')
       } else {
           return reject(new Error("error with yelp"))
@@ -50,7 +51,6 @@ exports.apiSearch = function (req) {
   })
 
   const product = new Promise((resolve, reject) => {
-    let input = req.body.list
     request('http://api.walmartlabs.com/v1/search?apiKey=erubnzcy46ck4nsjxnhnndp8&query=' + input,
       (err, apiRes, body) => {
         if (err || !body) {
@@ -70,11 +70,10 @@ exports.apiSearch = function (req) {
   })
 
   const movie = new Promise((resolve, reject) => {
-    let query = req.body.list;
-    let url = 'http://www.omdbapi.com/?s=' + query + '&apikey=thewdb'
+    let url = 'http://www.omdbapi.com/?s=' + input + '&apikey=thewdb'
     request(url, function (error, response, body) {
       let data = JSON.parse(body);
-      console.log(data)
+      //console.log(data)
       if (error || !data && !!response.statusCode === 200 || data.Error) {
         return reject(new Error('error in movie'))
       } else {
@@ -90,7 +89,6 @@ exports.apiSearch = function (req) {
   })
 
   const book = new Promise((resolve, reject) => {
-    let input = req.body.list;
     let key = '2zgVviFR7njEvPz8Tsna7w';
     request(`https://www.goodreads.com/book/title.xml?key=${key}&title=${input}`,
       (err, response, body) => {
@@ -111,8 +109,8 @@ exports.apiSearch = function (req) {
 
 
   return Promise.all([eat, product, movie, book]).then(function (r) {
-    database.insertPost(req.body.list, category)
-    database.getAllPosts()
+    database.insertPost(input, category)
+    //database.getAllPosts()
   })
 }
 }

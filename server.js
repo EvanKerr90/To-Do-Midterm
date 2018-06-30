@@ -19,7 +19,7 @@ const yelp = require('yelp-fusion');
 const database = require("./database")(knex);
 const search = require("./apis")
 
-//const postsRoutes = require("./routes/posts")(database);
+const postsRoutes = require("./routes/posts")(database);
 
 //app.use("/posts", postsRoutes);
 
@@ -38,6 +38,9 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+app.use("/posts", postsRoutes);
+
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -51,18 +54,13 @@ app.use(express.static("public"));
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index", {
-    restaurant: null,
-    other: null
-  });
+  res.render("index")
   //return database.insertPost('Test', 'Test')
   //return database.getAllPosts()
 });
 
 app.post('/', (req, res) => {
-search.apiSearch(req)
-database.getAllPosts()
-res.render("index")
+res.redirect("/")
 })
 
 

@@ -1,36 +1,28 @@
 "use strict";
+const express = require('express');
+const postsRoutes = express.Router();
 
-const express       = require('express');
-const postsRoutes  = express.Router();
+const search = require("../apis")
 
+module.exports = function (database) {
 
-
-module.exports = function(database) {
-
-  postsRoutes.get("/", function(req, res) {
-    DataHelpers.getTweets((err, posts) => {
+  postsRoutes.get("/", function (req, res) {
+    database.getAllPosts((err, result) => {
       if (err) {
-        res.status(500).json({ error: err.message });
+        console.log(err)
       } else {
-        res.json(posts);
+      console.log(JSON.stringify(result))
+      res.send(result)
       }
-    });
+    })
   });
 
-  postsRoutes.post("/", function(req, res) {
-    if (!req.body.list) {
-      res.status(400).json({ error: 'invalid request: no data in POST body'});
-      return;
-    }
+  postsRoutes.post("/", function (req, res) {
+    //console.log(req.body)
+  search.apiSearch(req)
+  res.status(201).send()
 
-    database.insertPost(post, (err) => {
-      if (err) {
-        res.status(500).json({ error: err.message });
-      } else {
-        res.status(201).send();
-      }
-    });
-  });
+  })
 
   return postsRoutes;
 

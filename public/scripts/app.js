@@ -1,46 +1,49 @@
 $(document).ready(function () {
+  loadPosts()
 
   function createPost(post) {
-
-    let $tweet = $('<article>').addClass('full tweet');
-    var image = $('<img>').attr('src', tweet.user.avatars.small);
-    var handle = $('<span>').text(tweet.user.handle).addClass('creator');
-    var $name = $('<h2>').text(tweet.user.name);
-    var $header = $('<header>');
-    var createdDate = $('<span>').text(date).addClass('date created');
-    var $iconSpan = $('<span>').addClass('icons');
-    var icon1 = $('<i>').addClass('fab fa-font-awesome-flag');
-    var icon2 = $('<i>').addClass('fas fa-retweet');
-    var icon3 = $('<i>').addClass('fas fa-heart');
-    var $footer = $('<footer>');
-    var $content = $('<p>').text(tweet.content.text);
-    $name.append(image, handle);
-    $header.append($name);
-    $iconSpan.append(icon1, icon2, icon3);
-    $footer.append(createdDate, $iconSpan);
-    $tweet.append($header, $content, $footer);
-
+    var $post = $('<button>').attr('id', post.id).text(post.content).addClass("list-group-item")
 
     return $post;
   }
-  
-function renderPosts(posts) {
-  $('section.tweet').empty();
-  posts.forEach(function (element) {
-    var $post = createTweetElement(element);
-    $('section.tweet').prepend($tweet);
-  });
-}
 
 
-function loadPosts() {
-  $.ajax({
-    Method: 'GET',
-    url: '/posts/',
-    success: function (data) {
-      renderPosts(data);
+  function renderPosts(posts) {
+    console.log(posts)
+    posts.forEach(function(element)  {
+      $('div.to-eat' + element.category).empty();
+      var $post = createPost(element);
+      $('div.to eat' + element.category).append($post);
+    })
+  }
+
+
+  function loadPosts() {
+    $.ajax({
+      Method: 'GET',
+      url: '/posts/',
+      success: function (data) {
+        console.log(data)
+        renderPosts(data);
+      }
+    })
+  };
+
+  $('form').on('submit', function (post) {
+    post.preventDefault();
+    //var data = $('form').val()
+    //console.log(data)
+    var message = $('form textarea').val();
+    //console.log(message)
+    if (message.length <= 0) {
+      alert("Please write some text.")
+      return;
+    } else {
+      $.post('/posts', {data:message}, function () {
+        $('form textarea').val('')
+        return loadPosts() ;
+      }) 
     }
-  })
-};
+  });
 
 })
