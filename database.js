@@ -20,15 +20,14 @@ module.exports = function knexData(knex) {
         });
     },
 
-    modifyPost: function (id, newCategory) {
-      knex('posts').where('id', id).update('category', newCategory)
+    modifyPost: function (data) {
+      //console.log(data)
+      knex('posts').where({'id': data.id}).update({'category': data.newCategory}).then()
     },
 
     deletePost: function (id) {
-      console.log(id.id)
-      // knex.from('posts').select('id').where('id', 1).del();
-      knex('posts').where({'id': id.id}).del().then();
-      
+      //console.log(id.id)
+      knex('posts').where({'id': id.id}).del().then();    
     }
   }
 }
