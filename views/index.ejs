@@ -20,6 +20,7 @@
   <script type="text/javascript" src="/scripts/app.js"></script>
 
   <script>
+
     function allowDrop(ev) {
       ev.preventDefault();
     }
@@ -32,7 +33,11 @@
       ev.preventDefault();
       var data = ev.dataTransfer.getData("text");
       ev.target.appendChild(document.getElementById(data));
-    }
+      let category = $(ev.target).attr('id')
+      $.post('/posts/edit', {id: data, newCategory: category}, function () {
+        return console.log("sent")
+    })
+}
 
   </script>
 
