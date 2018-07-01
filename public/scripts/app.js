@@ -16,12 +16,29 @@ $(document).ready(function () {
     })
     var $span = $('<span>').addClass('span')
     var $post = $('<button>').attr('draggable', 'true').attr('ondragstart', 'drag(event)').attr('type', 'button').attr('id', post.id).text(post.content)
-    var $div = $('<div>').addClass('list-group').attr('id', post.id)
+    var $div = $('<div>').addClass('list-group').attr('id', post.id).click(function(){
+
+      if($(this).css("color") === "rgb(128, 128, 128)"){
+         $(this).css({
+          color: "black",
+          textDecoration: "none"
+   
+        });
+      }
+      else{
+        $(this).css({
+          color: "gray",
+          textDecoration: "line-through"
+   
+        });
+   
+      }
+   
+      });
 
     $span.append($image)
     $post.append($span)
     $div.append($post)
-    //console.log($div)
 
     return $div;
   }
@@ -30,7 +47,6 @@ $(document).ready(function () {
 
 
   function renderPosts(posts) {
-    //console.log(posts)
     $('div.card-body').empty()
     posts.forEach(function(element)  {
       let category = element.category
@@ -70,7 +86,7 @@ $(document).ready(function () {
     }
   });
 
-  $("div").click(function(){
+  $("button").click(function(){
 
     if($(this).css("color") === "rgb(128, 128, 128)"){
        $(this).css({
@@ -89,18 +105,6 @@ $(document).ready(function () {
     }
  
     });
-
- 
-
-    $("#icon").on("click", function(event){
-      alert("CLICKED")
-      //$(this).parent().fadeOut(500, function(){
-        //$(this).remove();
-        //
-      //})
-      event.stopPropagation();
-  
-    })
 
 
 })

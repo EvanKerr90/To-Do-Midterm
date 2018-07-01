@@ -20,7 +20,6 @@
   <script type="text/javascript" src="/scripts/app.js"></script>
 
   <script>
-
     function allowDrop(ev) {
       ev.preventDefault();
     }
@@ -34,10 +33,13 @@
       var data = ev.dataTransfer.getData("text");
       ev.target.appendChild(document.getElementById(data));
       let category = $(ev.target).attr('id')
-      $.post('/posts/edit', {id: data, newCategory: category}, function () {
+      $.post('/posts/edit', {
+        id: data,
+        newCategory: category
+      }, function () {
         return console.log("sent")
-    })
-}
+      })
+    }
 
   </script>
 
@@ -93,13 +95,10 @@
         <div class="card">
           <img class="card-img-top" src="https://images.unsplash.com/photo-1506354666786-959d6d497f1a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=86c8c1fd5e9e5b384696472a095c42ac&auto=format&fit=crop&w=1050&q=80"
             alt="">
+          <h4 class="card-title">To Eat</h4>
           <div ondrop="drop(event)" ondragover="allowDrop(event)" class="card-body" id="Food">
-            <h4 class="card-title">To Eat</h4>
             <div class="list-group">
               <button draggable="true" ondragstart="drag(event)" type="button" id="p1">
-                <span class="span">
-                  <i class="fa fa-trash" id='icon'></i>
-                </span>Cras justo odio</button>
             </div>
           </div>
           <div class="card-footer">
@@ -111,29 +110,10 @@
         <div class="card">
           <img class="card-img-top" src="https://images.unsplash.com/photo-1485095329183-d0797cdc5676?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=2405fa5a688f4c925fa1b8f6959174f8&auto=format&fit=crop&w=1050&q=80"
             alt="">
+          <h4 class="card-title">To Watch</h4>
           <div ondrop="drop(event)" ondragover="allowDrop(event)" class="card-body" id="Movie">
-            <h4 class="card-title">To Watch</h4>
             <div class="list-group">
               <button draggable="true" ondragstart="drag(event)" type="button" id="p2">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Cras justo odio</button>
-              <button type="button" class="list-group-item">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Dapibus ac facilisis in</button>
-              <button type="button" class="list-group-item">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Morbi leo risus</button>
-              <button type="button" class="list-group-item">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Porta ac consectetur ac</button>
-              <button type="button" class="list-group-item">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Vestibulum at eros</button>
             </div>
           </div>
           <div class="card-footer">
@@ -145,29 +125,9 @@
         <div class="card">
           <img class="card-img-top" src="https://images.unsplash.com/photo-1521714161819-15534968fc5f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=4ed09f54e45802124a212b6163dec174&auto=format&fit=crop&w=1500&q=80"
             alt="">
+          <h4 class="card-title">To Read</h4>
           <div ondrop="drop(event)" ondragover="allowDrop(event)" class="card-body" id="Book">
-            <h4 class="card-title">To Read</h4>
             <div class="list-group">
-              <button draggable="true" ondragstart="drag(event)" type="button" id="p3">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Cras justo odio</button>
-              <button type="button" class="list-group-item">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Dapibus ac facilisis in</button>
-              <button type="button" class="list-group-item">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Morbi leo risus</button>
-              <button type="button" class="list-group-item">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Porta ac consectetur ac</button>
-              <button type="button" class="list-group-item">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Vestibulum at eros</button>
             </div>
           </div>
           <div class="card-footer">
@@ -179,29 +139,10 @@
         <div class="card">
           <img class="card-img-top" src="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1050&q=80"
             alt="">
+          <h4 class="card-title">To Buy</h4>
           <div ondrop="drop(event)" ondragover="allowDrop(event)" class="card-body" id="Product">
-            <h4 class="card-title">To Buy</h4>
             <div class="list-group">
               <button draggable="true" ondragstart="drag(event)" type="button" id="p4">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Cras justo odio</button>
-              <button type="button" class="list-group-item">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Dapibus ac facilisis in</button>
-              <button type="button" class="list-group-item">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Morbi leo risus</button>
-              <button type="button" class="list-group-item">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Porta ac consectetur ac</button>
-              <button type="button" class="list-group-item">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Vestibulum at eros</button>
             </div>
           </div>
           <div class="card-footer">
@@ -213,29 +154,10 @@
         <div class="card">
           <img class="card-img-top" src="https://images.unsplash.com/photo-1465101162946-4377e57745c3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0ae83373fe7bf60aaf6ceb8daa337fc9&auto=format&fit=crop&w=1514&q=80"
             alt="">
+          <h4 class="card-title">Other</h4>
           <div ondrop="drop(event)" ondragover="allowDrop(event)" class="card-body" id="Other">
-            <h4 class="card-title">Other</h4>
             <div class="list-group">
               <button draggable="true" ondragstart="drag(event)" type="button" id="p5">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Cras justo odio</button>
-              <button type="button" class="list-group-item">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Dapibus ac facilisis in</button>
-              <button type="button" class="list-group-item">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Morbi leo risus</button>
-              <button type="button" class="list-group-item">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Porta ac consectetur ac</button>
-              <button type="button" class="list-group-item">
-                <span class="span">
-                  <i class="fa fa-trash"></i>
-                </span>Vestibulum at eros</button>
             </div>
           </div>
           <div class="card-footer">
