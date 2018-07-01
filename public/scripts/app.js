@@ -3,10 +3,10 @@ $(document).ready(function () {
 
   function createPostElement(post) {
     //console.log(post.content)
-    var $image = $('<i>').addClass("fa fa-trash")
+    var $image = $('<i>').addClass("fa fa-trash").attr('id', 'icon')
     var $span = $('<span>').addClass('span')
     var $post = $('<button>').attr('draggable', 'true').attr('ondragstart', 'drag(event)').attr('type', 'button').attr('id', post.id).text(post.content)
-    var $div = $('<div>').addClass('list-group')
+    var $div = $('<div>').addClass('list-group').attr('id', post.id)
 
     $span.append($image)
     $post.append($span)
@@ -57,5 +57,39 @@ $(document).ready(function () {
       }) 
     }
   });
+
+  $("div").click(function(){
+
+    if($(this).css("color") === "rgb(128, 128, 128)"){
+       $(this).css({
+        color: "black",
+        textDecoration: "none"
+ 
+      });
+    }
+    else{
+      $(this).css({
+        color: "gray",
+        textDecoration: "line-through"
+ 
+      });
+ 
+    }
+ 
+    });
+
+  $("#icon").click(function(event){
+    alert("CLICKED")
+    //$(this).parent().fadeOut(500, function(){
+      //$(this).remove();
+      //$.ajax({
+        //type: 'POST',
+        //url: '/posts/delete',
+        //data: $(this).parent().parent().attr('id')
+      //})
+    //})
+    event.stopPropagation();
+
+  })
 
 })

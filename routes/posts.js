@@ -23,6 +23,13 @@ module.exports = function (database) {
 
   })
 
+  postsRoutes.post("/delete", async function (req, res) {
+    //console.log(req.body)
+  await database.deletePost(req)
+  res.status(201).send()
+
+  })
+
   return postsRoutes;
 
 }

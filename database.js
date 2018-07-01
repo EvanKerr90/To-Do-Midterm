@@ -16,7 +16,6 @@ module.exports = function knexData(knex) {
           } else {
             console.log(result)
             return
-            //knex.destroy();
           }
         });
     },
