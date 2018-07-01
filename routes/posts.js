@@ -16,9 +16,9 @@ module.exports = function (database) {
       })
   });
 
-  postsRoutes.post("/", function (req, res) {
+  postsRoutes.post("/", async function (req, res) {
     //console.log(req.body)
-  search.apiSearch(req)
+  await search.apiSearch(req)
   res.status(201).send()
 
   })

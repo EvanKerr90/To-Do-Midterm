@@ -2,26 +2,30 @@ $(document).ready(function () {
   loadPosts()
 
   function createPostElement(post) {
-    console.log(post.content)
+    //console.log(post.content)
     var $image = $('<i>').addClass("fa fa-trash")
     var $span = $('<span>').addClass('span')
     var $post = $('<button>').attr('draggable', 'true').attr('ondragstart', 'drag(event)').attr('type', 'button').attr('id', post.id).text(post.content)
-    
+    var $div = $('<div>').addClass('list-group')
+
     $span.append($image)
     $post.append($span)
-    console.log($post)
+    $div.append($post)
+    //console.log($div)
 
-    return $post;
+    return $div;
   }
 
 
   function renderPosts(posts) {
     //console.log(posts)
-    //$('div.to eat').empty()
+    $('div.card-body').empty()
     posts.forEach(function(element)  {
-      //console.log(element)
+      let category = element.category
+      //console.log(category)
       var $post = createPostElement(element);
-      $('div#to eat.list-group').append($post);
+      console.log($('div#' + category + '.card-body'))
+      $('div#' + category + '.card-body' ).append($post);
     });
   }
 
