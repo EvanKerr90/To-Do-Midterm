@@ -21,12 +21,13 @@ module.exports = function knexData(knex) {
     },
 
     modifyPost: function (data) {
-      console.log(data)
+      //console.log(data)
       knex('posts').where({'id': data.id}).update({'category': data.newCategory}).then()
     },
 
     deletePost: function (id) {
-      return knex('posts').where('id', id).delete()
+      //console.log(id.id)
+      knex('posts').where({'id': id.id}).del().then();    
     }
   }
 }

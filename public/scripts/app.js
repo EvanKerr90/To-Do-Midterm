@@ -3,7 +3,17 @@ $(document).ready(function () {
 
   function createPostElement(post) {
     //console.log(post.content)
-    var $image = $('<i>').addClass("fa fa-trash").attr('id', 'icon')
+    var $image = $('<button>').addClass("fa fa-trash").attr('id', 'icon').click(function(event){
+      $(this).parent().parent().fadeOut(500, function(){
+        $(this).remove();
+      })
+      $.ajax({
+        type: 'POST',
+        url: '/posts/delete',
+        data: {id: $(this).parent().parent().attr('id')}
+      })
+      event.stopPropagation();
+    })
     var $span = $('<span>').addClass('span')
     var $post = $('<button>').attr('draggable', 'true').attr('ondragstart', 'drag(event)').attr('type', 'button').attr('id', post.id).text(post.content)
     var $div = $('<div>').addClass('list-group').attr('id', post.id)
@@ -15,6 +25,8 @@ $(document).ready(function () {
 
     return $div;
   }
+
+
 
 
   function renderPosts(posts) {
@@ -78,18 +90,17 @@ $(document).ready(function () {
  
     });
 
-  $("#icon").click(function(event){
-    alert("CLICKED")
-    //$(this).parent().fadeOut(500, function(){
-      //$(this).remove();
-      //$.ajax({
-        //type: 'POST',
-        //url: '/posts/delete',
-        //data: $(this).parent().parent().attr('id')
-      //})
-    //})
-    event.stopPropagation();
+ 
 
-  })
+    $("#icon").on("click", function(event){
+      alert("CLICKED")
+      //$(this).parent().fadeOut(500, function(){
+        //$(this).remove();
+        //
+      //})
+      event.stopPropagation();
+  
+    })
+
 
 })
