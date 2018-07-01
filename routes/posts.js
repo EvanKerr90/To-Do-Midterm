@@ -24,8 +24,8 @@ module.exports = function (database) {
   })
 
   postsRoutes.post("/delete", async function (req, res) {
-    //console.log(req.body)
-  await database.deletePost(req)
+    console.log(req.body)
+    await database.deletePost(req.body)
   res.status(201).send()
 
   })

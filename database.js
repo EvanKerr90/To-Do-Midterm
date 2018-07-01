@@ -25,7 +25,10 @@ module.exports = function knexData(knex) {
     },
 
     deletePost: function (id) {
-      knex('posts').where('id', id).delete()
+      console.log(id.id)
+      // knex.from('posts').select('id').where('id', 1).del();
+      knex('posts').where({'id': id.id}).del().then();
+      
     }
   }
 }

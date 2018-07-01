@@ -63,8 +63,13 @@ app.post('/', (req, res) => {
 res.redirect("/")
 })
 
+app.get("/register", (req, res) => {
+res.sendFile("/vagrant/To-Do-Midterm/views/register.html")
+})
 
-
+app.get("/login", (req, res) => {
+  res.sendFile("/vagrant/To-Do-Midterm/views/login.html")
+  })
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
