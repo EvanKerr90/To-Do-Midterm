@@ -3,7 +3,7 @@ $(document).ready(function () {
 
   function createPostElement(post) {
     //console.log(post.content)
-    var $image = $('<button>').addClass("fa fa-trash").attr('id', 'icon').click(function(event){
+    var $image = $('<button>').addClass("fas fa-minus-circle").attr('id', 'icon').click(function(event){
       $(this).parent().parent().fadeOut(500, function(){
         $(this).remove();
       })
@@ -18,7 +18,7 @@ $(document).ready(function () {
     var $post = $('<button>').attr('draggable', 'true').attr('ondragstart', 'drag(event)').attr('type', 'button').attr('id', post.id).text(post.content)
     var $div = $('<div>').addClass('list-group').attr('id', post.id).click(function(){
 
-      if($(this).css("color") === "rgb(128, 128, 128)"){
+      if($(this).css("color") === "rgb(255, 0, 0)"){
          $(this).css({
           color: "black",
           textDecoration: "none"
@@ -27,7 +27,7 @@ $(document).ready(function () {
       }
       else{
         $(this).css({
-          color: "gray",
+          color: "red",
           textDecoration: "line-through"
    
         });

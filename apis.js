@@ -59,13 +59,19 @@ exports.apiSearch = function (req) {
       let inputLower = input.toLowerCase();
       request('http://api.walmartlabs.com/v1/search?apiKey=erubnzcy46ck4nsjxnhnndp8&query=' + input,
         (err, apiRes, body) => {
-          if (err || !body) {
+          // console.log(body.numItems)
+          let result = JSON.parse(body);
+          if (err || !result || result['numItems'] === 0) {
             return reject(new Error('error in walmart'));
-          } else {
-            let result = JSON.parse(body);
-            if (!result.items) {
-              return reject(new Error('error in walmart'));
+          // } else if () {
+            
+
+          //   let result = JSON.parse(body);
+          //   if (!result.items) {
+          //     return reject(new Error('error in walmart'));
             } else {
+              // let result = JSON.parse(body);
+              // console.log(result)
               let resultName = result.items[0].name;
               let resultNameLower = resultName.toLowerCase();
               if (resultNameLower.includes(inputLower)) {
@@ -74,7 +80,7 @@ exports.apiSearch = function (req) {
                 return resolve(apiChoice.product = false);
               }
             }
-          }
+          // }
         })
     }).catch(function (error) {
       apiChoice.product = false;
