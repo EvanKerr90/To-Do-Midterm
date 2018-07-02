@@ -9,30 +9,26 @@ module.exports = function (database) {
 
   postsRoutes.get("/", function (req, res) {
     database.getAllPosts()
-    .then(function (result) {
-        //console.log(result)
+      .then(function (result) {
         res.json(result)
       })
   });
 
   postsRoutes.post("/", async function (req, res) {
-    //console.log(req.body)
-  await search.apiSearch(req)
-  res.status(201).send()
+    await search.apiSearch(req)
+    res.status(201).send()
 
   })
 
   postsRoutes.post("/delete", async function (req, res) {
-    //console.log(req.body)
     await database.deletePost(req.body)
     res.status(201).send()
 
   })
 
   postsRoutes.post("/edit", async function (req, res) {
-  console.log(req.body)
-  await database.modifyPost(req.body)
-  res.status(201).send()
+    await database.modifyPost(req.body)
+    res.status(201).send()
 
   })
 

@@ -17,7 +17,7 @@ const database = require("./database")(knex);
 
 exports.apiSearch = function (req) {
   let input = req.body.data
-  
+
   if (!input) {
     return
   } else {
@@ -44,9 +44,8 @@ exports.apiSearch = function (req) {
         const firstResult = response.jsonBody.businesses[0];
         const firstName = firstResult && firstResult.name;
         const restaurantName = JSON.stringify(firstName, null, 4);
-        // only return true if firstName includes inputName
         return resolve(apiChoice.food = firstName && restaurantName.toLowerCase().includes(input.toLowerCase()))
-      }).catch(function (error){
+      }).catch(function (error) {
         apiChoice.food = false;
       })
 
@@ -59,28 +58,18 @@ exports.apiSearch = function (req) {
       let inputLower = input.toLowerCase();
       request('http://api.walmartlabs.com/v1/search?apiKey=erubnzcy46ck4nsjxnhnndp8&query=' + input,
         (err, apiRes, body) => {
-          // console.log(body.numItems)
           let result = JSON.parse(body);
           if (err || !result || result['numItems'] === 0) {
             return reject(new Error('error in walmart'));
-          // } else if () {
-            
-
-          //   let result = JSON.parse(body);
-          //   if (!result.items) {
-          //     return reject(new Error('error in walmart'));
+          } else {
+            let resultName = result.items[0].name;
+            let resultNameLower = resultName.toLowerCase();
+            if (resultNameLower.includes(inputLower)) {
+              return resolve(apiChoice.product = true);
             } else {
-              // let result = JSON.parse(body);
-              // console.log(result)
-              let resultName = result.items[0].name;
-              let resultNameLower = resultName.toLowerCase();
-              if (resultNameLower.includes(inputLower)) {
-                return resolve(apiChoice.product = true);
-              } else {
-                return resolve(apiChoice.product = false);
-              }
+              return resolve(apiChoice.product = false);
             }
-          // }
+          }
         })
     }).catch(function (error) {
       apiChoice.product = false;
@@ -137,19 +126,19 @@ exports.apiSearch = function (req) {
     })
 
     return Promise.all([eat, product, movie, book]).then(function (r) {
-      if (apiChoice.movie === true) {
-        return category = "Movie";
-      } else if (apiChoice.book === true) {
-        return category = "Book";
-      } else if (apiChoice.food === true) {
-        return category = "Food";
-      } else if (apiChoice.product === true) {
-        return category = "Product";
-      } else {
-        return category = "Other";
-      }
-    })
-    .then(function (category) {
+        if (apiChoice.movie === true) {
+          return category = "Movie";
+        } else if (apiChoice.book === true) {
+          return category = "Book";
+        } else if (apiChoice.food === true) {
+          return category = "Food";
+        } else if (apiChoice.product === true) {
+          return category = "Product";
+        } else {
+          return category = "Other";
+        }
+      })
+      .then(function (category) {
         database.insertPost(req.body.data, category);
         database.getAllPosts();
       })
