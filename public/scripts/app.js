@@ -3,7 +3,7 @@ $(document).ready(function () {
 
   function createPostElement(post) {
     //console.log(post.content)
-    var $image = $('<button>').addClass("fa fa-trash").attr('id', 'icon').click(function(event){
+    var $image = $('<button>').addClass("fas fa-minus-circle").attr('id', 'icon').click(function(event){
       $(this).parent().parent().fadeOut(500, function(){
         $(this).remove();
       })
