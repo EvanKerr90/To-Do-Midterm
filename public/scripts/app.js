@@ -18,7 +18,7 @@ $(document).ready(function () {
     var $post = $('<button>').attr('draggable', 'true').attr('ondragstart', 'drag(event)').attr('type', 'button').attr('id', post.id).text(post.content)
     var $div = $('<div>').addClass('list-group').attr('id', post.id).click(function(){
 
-      if($(this).css("color") === "rgb(128, 128, 128)"){
+      if($(this).css("color") === "rgb(255, 0, 0)"){
          $(this).css({
           color: "black",
           textDecoration: "none"
@@ -27,7 +27,7 @@ $(document).ready(function () {
       }
       else{
         $(this).css({
-          color: "gray",
+          color: "red",
           textDecoration: "line-through"
    
         });
