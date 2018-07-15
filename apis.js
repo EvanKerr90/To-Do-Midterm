@@ -14,6 +14,7 @@ const request = require('request');
 const yelp = require('yelp-fusion');
 const parseString = require('xml2js').parseString;
 const database = require("./database")(knex);
+const apiKeys = require ("./secrets")
 
 exports.apiSearch = function (req) {
   let input = req.body.data
@@ -32,8 +33,7 @@ exports.apiSearch = function (req) {
     const eat = new Promise((resolve, reject) => {
       let input = req.body.data;
       let inputLower = input.toLowerCase();
-      const apiKey = 'zSL9-cuYDgOMp4YRJ9LjlwidFo8hTQ2P6fmXm6fAN3M8E7VVuyQT7mmE4HTlWks7nJ5X9h1mbluRPY9zMC_XI8S46YprxtQspNATurms73EN-OiUZ5UkH5cEnCk0W3Yx';
-
+      const apiKey = apiKeys.Yelp;
       const client = yelp.client(apiKey);
       const searchRequest = {
         term: input,
@@ -56,7 +56,7 @@ exports.apiSearch = function (req) {
     const product = new Promise((resolve, reject) => {
       let input = req.body.data
       let inputLower = input.toLowerCase();
-      request('http://api.walmartlabs.com/v1/search?apiKey=erubnzcy46ck4nsjxnhnndp8&query=' + input,
+      request(apiKeys.Walmart + input,
         (err, apiRes, body) => {
           let result = JSON.parse(body);
           if (err || !result || result['numItems'] === 0) {
@@ -78,7 +78,7 @@ exports.apiSearch = function (req) {
     const movie = new Promise((resolve, reject) => {
       let input = req.body.data;
       let inputLower = input.toLowerCase();
-      let url = 'http://www.omdbapi.com/?s=' + input + '&apikey=thewdb'
+      let url = apiKeys.Omdb.first + input + apiKeys.Omdb.second
       request(url, function (error, response, body) {
         let data = JSON.parse(body);
         if (error || !data && !!response.statusCode === 200 || data.Error === "Movie not found!") {
@@ -100,12 +100,12 @@ exports.apiSearch = function (req) {
     const book = new Promise((resolve, reject) => {
       let input = req.body.data;
       let inputLower = input.toLowerCase();
-      let key = '2zgVviFR7njEvPz8Tsna7w';
-      request(`https://www.goodreads.com/book/title.xml?key=${key}&title=${input}`,
+      let key = apiKeys.Goodreads.key;
+      request(apiKeys.Goodreads.first + key + apiKeys.Goodreads.second + input,
         (err, response, body) => {
           let xml = body;
           if (err || !body) {
-            return reject(new Error('error in book'));
+            return reject(new Error('error in book'));v
           }
           parseString(xml, function (err, result) {
             if (!result.GoodreadsResponse) {
